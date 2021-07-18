@@ -18,7 +18,7 @@ namespace CityReport.Services
 
             string path = $"astronomy.json?q={name}";
             var result = await _weatherAPIHttpClient.Get(path);
-            if (result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode && result.Content != null)
             {
                 var content = await result.Content.ReadAsStringAsync();
                 // log from here
@@ -33,7 +33,7 @@ namespace CityReport.Services
 
             string path = $"current.json?q={name}";
             var result = await _weatherAPIHttpClient.Get(path);
-            if (result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode && result.Content != null)
             {
                 var content = await result.Content.ReadAsStringAsync();
                 response = JsonConvert.DeserializeObject<CurrentDTO>(content);
@@ -47,7 +47,7 @@ namespace CityReport.Services
                 
             string path = $"timezone.json?q={name}";
             var result = await _weatherAPIHttpClient.Get(path);
-            if(result.IsSuccessStatusCode)
+            if(result.IsSuccessStatusCode && result.Content != null)
             {
                 var content = await result.Content.ReadAsStringAsync();
                 response = JsonConvert.DeserializeObject<LocationDTO>(content);

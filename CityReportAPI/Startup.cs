@@ -29,6 +29,13 @@ namespace CityReportAPI
             Bootstrap.Configure(services, Configuration);
             services.AddControllers();
             services.AddOpenApiDocument();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +45,7 @@ namespace CityReportAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
